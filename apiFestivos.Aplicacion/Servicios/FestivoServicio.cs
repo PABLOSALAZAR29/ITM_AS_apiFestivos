@@ -71,12 +71,13 @@ namespace apiFestivos.Aplicacion.Servicios
 
         private DateTime SiguienteLunes(DateTime fecha)
         {
-            DayOfWeek diaSemana = fecha.DayOfWeek;
-            int diasLunes = ((int)DayOfWeek.Monday - (int)diaSemana + 7) % 7;
-            return AgregarDias(fecha, diasLunes);
+            int diasHastaLunes = ((int)DayOfWeek.Monday - (int)fecha.DayOfWeek + 7) % 7;
+            diasHastaLunes = diasHastaLunes == 0 ? 7 : diasHastaLunes; // Si es lunes, avanzar 7 días
+            return fecha.AddDays(diasHastaLunes);
         }
 
-        private FechaFestivo ObtenerFestivo(int año, Festivo festivo)
+
+        public FechaFestivo ObtenerFestivo(int año, Festivo festivo)
         {
             FechaFestivo fechaFestivo = null;
             DateTime domingoPascua = AgregarDias(ObtenerInicioSemanaSanta(año), 7);
